@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class RestConfiguration {
 
     // The rest template is used to make HTTP requests to other services
-    @LoadBalanced
+   // @LoadBalanced - don't use this for external service calls
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();

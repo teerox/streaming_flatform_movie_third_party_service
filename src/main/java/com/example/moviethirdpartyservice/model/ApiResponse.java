@@ -3,17 +3,17 @@ import java.util.List;
 
 // Main Response Class
 public class ApiResponse {
-    private int page;
+    private long page;
     private List<ResultResponse> results;
-    private int total_pages;
-    private int total_results;
+    private long totalPages;
+    private long totalResults;
 
     // Getters and Setters
-    public int getPage() {
+    public long getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(long page) {
         this.page = page;
     }
 
@@ -25,20 +25,20 @@ public class ApiResponse {
         this.results = results;
     }
 
-    public int getTotalPages() {
-        return total_pages;
+    public long getTotalPages() {
+        return totalPages;
     }
 
-    public void setTotalPages(int total_pages) {
-        this.total_pages = total_pages;
+    public void setTotalPages(long totalPages) {
+        this.totalPages = totalPages;
     }
 
-    public int getTotalResults() {
-        return total_results;
+    public long getTotalResults() {
+        return totalResults;
     }
 
-    public void setTotalResults(int total_results) {
-        this.total_results = total_results;
+    public void setTotalResults(long totalResults) {
+        this.totalResults = totalResults;
     }
 }
 
