@@ -1,6 +1,7 @@
 package com.example.moviethirdpartyservice.service;
 
 import com.example.moviethirdpartyservice.model.ApiResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,9 @@ public class ThirdPartyApiServiceImpl implements ThirdPartyApiService {
     private final RestTemplate restTemplate;
 
     // API Key should be included in the URL, not in headers
-    private final String API_KEY = "fb97e27952573c39dd8c56b40023750e";
-    private final String API_URL = "https://api.themoviedb.org/3/trending/movie/day?language=en-U&api_key=fb97e27952573c39dd8c56b40023750e";
+    // Use environment variables or secure storage for API key
+    @Value("${tmdb.api.key}")
+    private String API_KEY; // = System.getenv("TMDB_API_KEY"); // Retrieve API key from environment variable
 
     private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 
@@ -27,11 +29,20 @@ public class ThirdPartyApiServiceImpl implements ThirdPartyApiService {
         this.restTemplate = restTemplate;
     }
 
-    public ApiResponse getDataFromApi() {
+
+    public String getTrendingMoviesUrl() {
+        if (API_KEY == null || API_KEY.isEmpty()) {
+            throw new IllegalStateException("API Key is missing. Please set the environment variable 'TMDB_API_KEY'.");
+        }
+        return "https://api.themoviedb.org/3/trending/movie/day?language=en-US&api_key=" + API_KEY;
+    }
+
+    public ApiResponse getDataFromApi(Long page) {
+        System.out.println("url: " + getTrendingMoviesUrl() + "&page=" + page);
         try {
             // Make the request
             ResponseEntity<ApiResponse> response = restTemplate.exchange(
-                    API_URL, HttpMethod.GET, null, ApiResponse.class);
+                    getTrendingMoviesUrl() + "&page=" + page, HttpMethod.GET, null, ApiResponse.class);
 
             Objects.requireNonNull(response.getBody()).getResults().forEach(result -> {
                 if (result.getPoster_path() != null){

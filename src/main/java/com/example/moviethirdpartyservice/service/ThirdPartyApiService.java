@@ -10,5 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 public interface ThirdPartyApiService {
 
-    public ApiResponse getDataFromApi();
+    public String getTrendingMoviesUrl();
+    public ApiResponse getDataFromApi(Long page);
 }

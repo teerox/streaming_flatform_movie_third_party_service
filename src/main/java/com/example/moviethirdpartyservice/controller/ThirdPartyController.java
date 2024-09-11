@@ -2,10 +2,7 @@ package com.example.moviethirdpartyservice.controller;
 
 import com.example.moviethirdpartyservice.model.ApiResponse;
 import com.example.moviethirdpartyservice.service.ThirdPartyApiService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +15,8 @@ public class ThirdPartyController {
         this.thirdPartyService = thirdPartyService;
     }
 
-    @GetMapping("/movie-info/list")
-    public ApiResponse getMoviesFromApi() {
-       return thirdPartyService.getDataFromApi();
+    @GetMapping("/movies-external/list")
+    public ApiResponse getMoviesFromApi(@RequestParam(defaultValue = "1") long page) {
+       return thirdPartyService.getDataFromApi(page);
     }
 }
